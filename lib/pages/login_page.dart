@@ -25,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SvgPicture.asset(
                   'assets/images/login_image.svg',
@@ -55,13 +54,16 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 const SizedBox(height: 34),
-                AuthButton(
-                  labelText: 'Login',
-                  onPressed:
-                      () => Navigator.pushReplacementNamed(
-                        context,
-                        MyRoute.home.name,
-                      ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  child: AuthButton(
+                    labelText: 'Login',
+                    onPressed:
+                        () => Navigator.pushReplacementNamed(
+                          context,
+                          MyRoute.home.name,
+                        ),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(
