@@ -9,3 +9,5 @@ final class Login extends LoginEvent {
   final LoginRequestModel requestBody;
   const Login(this.requestBody);
 }
+
+final class Logout extends LoginEvent {}

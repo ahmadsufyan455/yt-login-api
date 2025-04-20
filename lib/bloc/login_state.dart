@@ -18,3 +18,8 @@ final class LoginFailed extends LoginState {
   final String errorMessage;
   const LoginFailed(this.errorMessage);
 }
+
+// logout
+final class LogoutLoading extends LoginState {}
+
+final class LogoutSuccess extends LoginState {}

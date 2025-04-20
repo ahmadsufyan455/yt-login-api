@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth_login_api/bloc/login_bloc.dart';
 import 'package:flutter_auth_login_api/models/login_request_model.dart';
 import 'package:flutter_auth_login_api/routes.dart';
+import 'package:flutter_auth_login_api/utils/session_manager.dart';
 import 'package:flutter_auth_login_api/widgets/auth_button.dart';
 import 'package:flutter_auth_login_api/widgets/error_dialog.dart';
 import 'package:flutter_auth_login_api/widgets/login_textfield.dart';
@@ -19,6 +20,24 @@ class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final paswordController = TextEditingController();
   bool isObscure = true;
+  final sessionManager = SessionManager();
+
+  void redirectToHomePage() {
+    Navigator.pushReplacementNamed(context, MyRoute.home.name);
+  }
+
+  void checkLoginSession() async {
+    final accessToken = await sessionManager.getAccessToken();
+    if (accessToken.isNotEmpty) {
+      redirectToHomePage();
+    }
+  }
+
+  @override
+  void initState() {
+    checkLoginSession();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
