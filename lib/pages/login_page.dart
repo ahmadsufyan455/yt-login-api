@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth_login_api/bloc/login_bloc.dart';
-import 'package:flutter_auth_login_api/models/login_request_model.dart';
 import 'package:flutter_auth_login_api/routes.dart';
 import 'package:flutter_auth_login_api/widgets/auth_button.dart';
-import 'package:flutter_auth_login_api/widgets/error_dialog.dart';
 import 'package:flutter_auth_login_api/widgets/login_textfield.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SvgPicture.asset(
                   'assets/images/login_image.svg',
@@ -58,42 +55,13 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 const SizedBox(height: 34),
-                BlocConsumer<LoginBloc, LoginState>(
-                  listener: (context, state) {
-                    if (state is LoginSuccess) {
-                      Navigator.pushReplacementNamed(
+                AuthButton(
+                  labelText: 'Login',
+                  onPressed:
+                      () => Navigator.pushReplacementNamed(
                         context,
                         MyRoute.home.name,
-                      );
-                    } else if (state is LoginFailed) {
-                      // show error dialog
-                      showDialog(
-                        context: context,
-                        builder: (context) => ErrorDialog(),
-                      );
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is LoginLoading) {
-                      return CircularProgressIndicator(
-                        color: Colors.blueAccent,
-                      );
-                    }
-                    return SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: AuthButton(
-                        labelText: 'Login',
-                        onPressed: () {
-                          final requestBody = LoginRequestModel(
-                            username: usernameController.text,
-                            password: paswordController.text,
-                            expiresInMins: 30,
-                          );
-                          context.read<LoginBloc>().add(Login(requestBody));
-                        },
                       ),
-                    );
-                  },
                 ),
                 const SizedBox(height: 16),
                 Text(
